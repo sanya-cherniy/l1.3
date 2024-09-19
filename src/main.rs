@@ -15,7 +15,18 @@ fn main() {
 
     let numbers: Vec<i32> = (1..=n).collect();
 
-    let num_threads = num_cpus::get(); // получаем кол-во ядер процессора
+    println!("Enter the number of processor cores:"); // получаем количество ядер процессора
+
+    let mut num_threads = String::new();
+
+    io::stdin()
+        .read_line(&mut num_threads)
+        .expect("Failed to read line"); // считываем N
+
+    let num_threads: usize = match num_threads.trim().parse() {
+        Ok(num) => num,
+        Err(_) => panic!("Input value not integer"),
+    };
 
     let chunk_size = (n as usize + num_threads - 1) / num_threads; // вычисляем размер блока
 
